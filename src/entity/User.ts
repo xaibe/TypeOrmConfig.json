@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Profile } from "./Profile";
 
 @Entity()
 export class User {
@@ -6,11 +13,10 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  name: string;
 
-  @Column()
-  lastName: string;
-
-  @Column()
-  weight: number;
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
+  stName: string;
 }
