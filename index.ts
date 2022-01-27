@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
+import { Photo } from "./src/entity/Photo";
 import { Profile } from "./src/entity/Profile";
 import { User } from "./src/entity/User";
 
@@ -9,7 +10,6 @@ createConnection()
 
     const profile = new Profile();
     profile.gender = "male";
-    profile.photo = "me.jpg";
     await connection.manager.save(profile);
     console.log("Saved a new profile with id: " + profile.id);
 
@@ -17,6 +17,16 @@ createConnection()
     user.name = "Joe Smith";
     user.profile = profile;
     await connection.manager.save(user);
+
+    const photo1 = new Photo();
+    photo1.url = "me.jpg";
+    photo1.profile = profile;
+    await connection.manager.save(photo1);
+
+    const photo2 = new Photo();
+    photo2.url = "me-and-bears.jpg";
+    photo2.profile = profile;
+    await connection.manager.save(photo2);
 
     console.log("Saved a new user with id: " + user.id);
 
