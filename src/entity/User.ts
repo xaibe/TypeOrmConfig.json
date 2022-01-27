@@ -2,9 +2,12 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Product } from "./Product";
 import { Profile } from "./Profile";
 
 @Entity()
@@ -19,4 +22,8 @@ export class User {
   @JoinColumn()
   profile: Profile;
   stName: string;
+
+  @ManyToMany(() => Product)
+  @JoinTable()
+  products: Product[];
 }

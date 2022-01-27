@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { Photo } from "./src/entity/Photo";
+import { Product } from "./src/entity/Product";
 import { Profile } from "./src/entity/Profile";
 import { User } from "./src/entity/User";
 
@@ -13,11 +14,6 @@ createConnection()
     await connection.manager.save(profile);
     console.log("Saved a new profile with id: " + profile.id);
 
-    const user = new User();
-    user.name = "Joe Smith";
-    user.profile = profile;
-    await connection.manager.save(user);
-
     const photo1 = new Photo();
     photo1.url = "me.jpg";
     photo1.profile = profile;
@@ -28,6 +24,21 @@ createConnection()
     photo2.profile = profile;
     await connection.manager.save(photo2);
 
+    const product1 = new Product();
+    product1.name = "Water bottle";
+    product1.Price = 150;
+    await connection.manager.save(product1);
+
+    const product2 = new Product();
+    product2.name = "Mug";
+    product2.Price = 100;
+    await connection.manager.save(product2);
+
+    const user = new User();
+    user.name = "Joe Smith";
+    user.profile = profile;
+    user.products = [product1, product2];
+    await connection.manager.save(user);
     console.log("Saved a new user with id: " + user.id);
 
     console.log("Loading users from the database...");
